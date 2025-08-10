@@ -1,3 +1,14 @@
+--[[lit-meta
+   name = "Bilal2453/argparse"
+   version = "0.7.1"
+   dependencies = {}
+   description = "Feature-rich command line parser for Lua"
+   tags = { "cli", "command line parser", "parser", "argparse" }
+   license = "MIT"
+   author = { name = "Bilal2453", email = "belal2453@gmail.com" }
+   homepage = "https://github.com/Bilal2453/lit-argparse"
+]]
+
 -- The MIT License (MIT)
 
 -- Copyright (c) 2013 - 2018 Peter Melnichenko
@@ -2056,7 +2067,17 @@ function Parser:error(msg)
 end
 
 -- Compatibility with strict.lua and other checkers:
-local default_cmdline = rawget(_G, "arg") or {}
+local default_cmdline = rawget(_G, "arg")
+if not default_cmdline then
+  default_cmdline = {}
+  -- Compatibility with luvi's 0-based args
+  local args = rawget(_G, "args")
+  if args then
+    for i = 0, #args + 1 do
+      default_cmdline[i - 1] = args[i]
+    end
+  end
+end
 
 function Parser:_parse(args, error_handler)
    return ParseState(self, error_handler):parse(args or default_cmdline)

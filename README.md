@@ -7,6 +7,13 @@ Argparse is a feature-rich command line parser for Lua inspired by argparse for 
 
 Argparse supports positional arguments, options, flags, optional arguments, subcommands and more. Argparse automatically generates usage, help, and error messages, and can generate shell completion scripts.
 
+## lit-argparse
+
+This fork is a repackaging of the original work into the [Lit](https://github.com/luvit/lit) package manager.
+The master branch was repurposed to host the final packaged files, for easier integration with Lit's git support.
+
+An important modification was applied to add support for Luvi's 0-based `args` so you can do `Parser:parse()` without having to pass anything when using Luvit/Luvi. Previously you had to manually create an equivalent to `arg`.
+
 ## Contents
 
 * [Example](#example)
@@ -34,7 +41,7 @@ local args = parser:parse()
 `args` contents depending on command line arguments:
 
 ```bash
-$ lua script.lua foo
+$ luvit script.lua foo
 ```
 
 ```lua
@@ -46,7 +53,7 @@ $ lua script.lua foo
 ```
 
 ```bash
-$ lua script.lua foo -I/usr/local/include -Isrc -o bar
+$ luvit script.lua foo -I/usr/local/include -Isrc -o bar
 ```
 
 ```lua
@@ -60,7 +67,7 @@ $ lua script.lua foo -I/usr/local/include -Isrc -o bar
 Error messages depending on command line arguments:
 
 ```bash
-$ lua script.lua foo bar
+$ luvit script.lua foo bar
 ```
 
 ```
@@ -70,7 +77,7 @@ Error: too many arguments
 ```
 
 ```bash
-$ lua script.lua --help
+$ luvit script.lua --help
 ```
 
 ```
@@ -102,17 +109,21 @@ Did you mean '--output'?
 
 ## Installation
 
-### Using LuaRocks
-
-Installing argparse using [LuaRocks](http://luarocks.org) is simple:
+### Using Lit
 
 ```bash
-$ luarocks install argparse
+$ lit install Bilal2453/argparse
 ```
 
-### Without LuaRocks
+Alternatively, if you are using Lit with the git implementation you may use:
 
-Download `src/argparse.lua` file and put it into the directory for Lua libraries or your working directory.
+```bash
+$ lit install https://github.com/Bilal2453/lit-argparse.git
+```
+
+### Without Lit
+
+Download `argparse.lua` file and put it into the `deps` directory.
 
 ## Tutorial
 
